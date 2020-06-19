@@ -8,6 +8,7 @@
 - <a href="#hello-world-flask">Hello World Flask</a>
 - <a href="#debugging-en-flask">Debugging en Flask</a>
 - <a href="#request-y-response">Request y Response</a>
+- <a href="#ciclos-de-request-y-response">Ciclos de Request y Response</a>
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -80,3 +81,25 @@ Tal vez su uso más inmediato a nuestras actividades como desarrolladores web se
 from flask import Flask, request
 request.remote_addr -> Retorna la ip del usuario.
 ```
+
+<h2>Ciclos de Request y Response</h2>
+<p>Request-Response: es uno de los métodos básicos que usan las computadoras para comunicarse entre sí, en el que la primera computadora envía una solicitud de algunos datos y la segunda responde a la solicitud.
+<p>Por lo general, hay una serie de intercambios de este tipo hasta que se envía el mensaje completo.
+<p>Por ejemplo: navegar por una página web es un ejemplo de comunicación de request-response.
+<p>Request-response se puede ver como una llamada telefónica, en la que se llama a alguien y responde a la llamada; es decir hacemos una petición y recibimos una respuesta.
+
+<h2>Templates con Jinja</h2>
+<p>Un template es un archivo html que nos permite renderear nformación estática y dinámica. Se le pueden pasar variables que posteriormente el browser podrá renderear y el usuario podrá ver la información.
+<p>Para hacer esto hay que crear el directorio templates.
+
+```
+Python
+    @app.route('/hello')
+    def hello():
+        user_ip = request.cookies.get('user_ip')
+        return render_template('hello.html', user_ip = user_ip)
+
+hello.html
+    <h1>Hello world, tu ip es {{ user_ip }}</h1>
+```
+Jinja puede renderear variables si, y solamente si están encerradas en llaves dobles.
