@@ -13,6 +13,7 @@
 - <a href="#estructuras-de-control">Estructuras de control</a>
 - <a href="#herencia-de-templates">Herencia de templates</a>
 - <a href="#include-y-links">Include y Links</a>
+- <a href="#uso-de-archivos-estáticos-imágenes">Uso de archivos estáticos: imágenes</a>
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
