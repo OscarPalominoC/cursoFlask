@@ -2,6 +2,11 @@
 
 <h2>Contenido</h2>
 * <a href="#Introducción">Introducción
+* <a href="#cómo-funcionan-las-aplicaciones-web">¿Cómo funcionan las aplicaciones web?
+* <a href="#qué-es-flask">¿Qué es Flask?
+* <a href="#hello-world-flask">Hello World Flask
+* <a href="#debugging-en-flask">Debugging en Flask
+* <a href="#request-y-response">Request y Response
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -27,7 +32,7 @@
 * No dependes de un dispositivo en específico ya que la aplicación se encuentra almacenada en la web.
 
 
-</h2>¿Qué es Flask?</h2>
+<h2>¿Qué es Flask?</h2>
 
 <p>En esta clase el profesor Bernardo Cassina nos explica cómo podemos usar Flask para desarrollar aplicaciones web escritas en Python con este framework.
 <p>Flask es un framework minimalista escrito en Python que permite crear aplicaciones web rápidamente y con un mínimo de líneas de código, busca que su infraestructura inicial sea lo más simple posible y pueda personalizarse fácilmente, puedes extender sus funcionalidades con las llamadas Flask Extensions http://flask.pocoo.org/extensions/
@@ -49,7 +54,7 @@
     Ejecutar flask run
 
 
-</h2>Debugging en Flask</h2>
+<h2>Debugging en Flask</h2>
 
 <p>Debugging: es el proceso de identificar y corregir errores de programación.
 Para activar el debug mode escribir lo siguiente en la consola:
