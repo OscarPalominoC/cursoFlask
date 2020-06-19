@@ -73,3 +73,8 @@ Tal vez su uso más inmediato a nuestras actividades como desarrolladores web se
 <p>Los sistemas operativos también suelen trabajar con logs, por ejemplo para guardar incidencias, errores, accesos de usuarios, etc.
 <p>A través de el logs se puede encontrar información para detectar posibles problemas en caso de que no funcione algún sistema como debiera o se haya producido una incidencia de seguridad.
 
+- Primero conseguimos la dirección ip del usuario. En este caso va a ser la dirección local.
+    - El objeto request nos va a proveer de esta información.
+         
+            from flask import Flask, request
+            request.remote_addr -> Retorna la ip del usuario.
