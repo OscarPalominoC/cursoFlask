@@ -1,23 +1,27 @@
 ## Curso de Flask
 
-Introducción
-
-Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.
-Flask es sencillo de aprender, tiene una documentación clara y práctica, es rápido a la hora de renderizar puede ser hasta tres veces más rapido que Django. También es fácil de realizar una API REST, la estructura de un proyecto es flexible y es ideal para aprender desarrollo web con un framework de Python.
+<h1>Introducción
+<p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.
+<p>Flask es sencillo de aprender, tiene una documentación clara y práctica, es rápido a la hora de renderizar puede ser hasta tres veces más rapido que Django. También es fácil de realizar una API REST, la estructura de un proyecto es flexible y es ideal para aprender desarrollo web con un framework de Python.
 
 
 ¿Cómo funcionan las aplicaciones web?
 
 Cuando utilizas una aplicación web puedes interactuar con ella desde una computadora hasta un dispositivo móvil, pero esto no quiere decir que consume el procesamiento de tu dispositivo. Todo lo contrario, se hace en una red de servidores.
+
 Estos servidores unen su poder de procesamiento con el fin transmitir solicitudes a todo el mundo, a su vez utilizar servidores especializados para almacenar los datos con los cuales se está trabajando, así como los datos de los demás usuarios. Como todo esto sucede sin demora alguna, parecerá que la aplicación se está ejecutando de forma nativa en tu dispositivo.
+
 El servidor procesa la información obtenida por el navegador, luego se realizan los procedimientos necesarios de acuerdo a la lógica de negocio de la aplicación para regresar la información solicitada al cliente.
+
 Ejemplo:
+
 Cuando utilizamos Google Drive el cual es una aplicación web y abrimos un documento con Google Docs, el navegador se comunica con los servidores para ver y editar el documento.
 A medida que vayas editando el documento, tu navegador trabajará de la mano con los servidores para asegurarse que todos los cambios se estén guardando.
+
 Ventajas:
-    Muchas de las aplicaciones web que existen son gratuitas.
-    Puedes acceder a tu información en cualquier momento y lugar.
-    No dependes de un dispositivo en específico ya que la aplicación se encuentra almacenada en la web.
+* Muchas de las aplicaciones web que existen son gratuitas.
+* Puedes acceder a tu información en cualquier momento y lugar.
+* No dependes de un dispositivo en específico ya que la aplicación se encuentra almacenada en la web.
 
 
 ¿Qué es Flask?
