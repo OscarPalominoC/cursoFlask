@@ -150,7 +150,7 @@ control-structure.html
 ```
 
 
-</h2>Herencia de templates</h2>
+<h2>Herencia de templates</h2>
 
 <p>Macro: son un conjunto de comandos que se invocan con una palabra clave, opcionalmente seguidas de parámetros que se utilizan como código literal. Los Macros son manejados por el compilador y no por el ejecutable compilado.
 <p>Los macros facilitan la actualización y mantenimiento de las aplicaciones debido a que su re-utilización minimiza la cantidad de código escrito necesario para escribir un programa.
