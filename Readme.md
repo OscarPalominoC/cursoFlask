@@ -1,4 +1,4 @@
-## <h1> Curso de Flask</h1>
+# <h1> Curso de Flask</h1>
 
 <h2>Contenido</h2>
 
@@ -12,6 +12,7 @@
 - <a href="#templates-con-Jinja">Templates con Jinja</a>
 - <a href="#estructuras-de-control">Estructuras de control</a>
 - <a href="#herencia-de-templates">Herencia de templates</a>
+- <a href="#include-y-links">Include y Links</a>
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -239,4 +240,27 @@ templates-inheritance.html
 {% endblock %}
 
 
+```
+
+<h2>Include y Links</h2>
+<p>El include es necesario para importar archivos a nuestra área de trabajo; sirven para reutilizar código que se va a repetir muchas veces, y así evitar que el desarrollo sea molestamente tedioso.
+<p>Funcionan de la siguiente manera:
+
+```
+base.html
+<body>
+    <header>
+        {% include 'navbar.html' %}
+    </header>
+    {% block content %} {% endblock %}
+</body>
+
+
+navbar.html
+<nav>
+    <ul>
+        <li> <a href="{{url_for('index')}}">Ir a inicio.</a></li>
+        <li><a href="https://platzi.com" target="_blank">Platzi.</a></li>
+    </ul>
+</nav>
 ```
