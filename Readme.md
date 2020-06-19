@@ -1,12 +1,12 @@
 ## <h1> Curso de Flask</h1>
 
 <h2>Contenido</h2>
-- <a href="#Introducción">Introducción
-- <a href="#cómo-funcionan-las-aplicaciones-web">¿Cómo funcionan las aplicaciones web?
-- <a href="#qué-es-flask">¿Qué es Flask?
-- <a href="#hello-world-flask">Hello World Flask
-- <a href="#debugging-en-flask">Debugging en Flask
-- <a href="#request-y-response">Request y Response
+    * <a href="#Introducción">Introducción
+    * <a href="#cómo-funcionan-las-aplicaciones-web">¿Cómo funcionan las aplicaciones web?
+    * <a href="#qué-es-flask">¿Qué es Flask?
+    * <a href="#hello-world-flask">Hello World Flask
+    * <a href="#debugging-en-flask">Debugging en Flask
+    * <a href="#request-y-response">Request y Response
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
