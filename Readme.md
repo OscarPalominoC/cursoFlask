@@ -76,5 +76,7 @@ Tal vez su uso más inmediato a nuestras actividades como desarrolladores web se
 - Primero conseguimos la dirección ip del usuario. En este caso va a ser la dirección local.
     - El objeto request nos va a proveer de esta información.
          
-            from flask import Flask, request
-            request.remote_addr -> Retorna la ip del usuario.
+```
+from flask import Flask, request
+request.remote_addr -> Retorna la ip del usuario.
+```
