@@ -9,6 +9,9 @@
 - <a href="#debugging-en-flask">Debugging en Flask</a>
 - <a href="#request-y-response">Request y Response</a>
 - <a href="#ciclos-de-request-y-response">Ciclos de Request y Response</a>
+- <a href="#templates-con-Jinja">Templates con Jinja</a>
+- <a href="#estructuras-de-control">Estructuras de control</a>
+- <a href="#herencia-de-templates">Herencia de templates</a>
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -103,3 +106,137 @@ hello.html
     <h1>Hello world, tu ip es {{ user_ip }}</h1>
 ```
 Jinja puede renderear variables si, y solamente si están encerradas en llaves dobles.
+
+<h2>Estructuras de control</h2>
+
+<p>Iteración: es la repetición de un segmento de código dentro de un programa de computadora. Puede usarse tanto como un término genérico (como sinónimo de repetición), así como para describir una forma específica de repetición con un estado mutable.
+<p>Un ejemplo de iteración sería el siguiente:
+
+```
+{% for key, segment in segment_details.items() %}
+    <tr>
+        <td>{{ key }}td>
+        <td>{{ segment }}td>
+    <tr>
+{% endfor %}  
+```
+
+En este ejemplo estamos iterando por cada segment_details.items() para mostrar los campos en una tabla {{ key }} {{ segment }} de esta forma dependiendo de cuantos segment_details.items() haya se repetirá el código.
+
+```
+main.py
+    TODOS = ['To do 1', 'To do 2', 'To do 3']
+    @app.route('/control-structure')
+    def control():
+        user_ip = request.cookies.get('user_ip')
+        context = {
+            'user_ip' : user_ip, 
+            'todos' : TODOS
+        }
+        return render_template('control-structure.html', **context)
+
+control-structure.html
+    {% if user_ip %}
+        <h1>Estructura de control, tu ip es {{ user_ip }}</h1>
+        <ul>
+            {% for todo in todos %}
+            <li>{{todo}}</li>
+            {% endfor %}
+        </ul>
+        
+    {% else %}
+        <a href="{{ url_for('index' )}}">Ir a inicio</a>
+    {% endif %}
+```
+
+
+</h2>Herencia de templates</h2>
+
+<p>Macro: son un conjunto de comandos que se invocan con una palabra clave, opcionalmente seguidas de parámetros que se utilizan como código literal. Los Macros son manejados por el compilador y no por el ejecutable compilado.
+<p>Los macros facilitan la actualización y mantenimiento de las aplicaciones debido a que su re-utilización minimiza la cantidad de código escrito necesario para escribir un programa.
+<p>En este ejemplo nuestra macro se vería de la siguiente manera:
+
+```
+{% macro nav_link(endpoint, text) %}
+    {% if request.endpoint.endswith(endpoint) %}
+        <li class="active"><a href="{{ url_for(endpoint) }}">{{text}}</a></li>
+    {% else %}
+        <li><a href="{{ url_for(endpoint) }}">{{text}}</a></li>
+    {% endif %}
+{% endmacro %}
+```
+
+<p>Un ejemplo de uso de macros en Flask:
+
+```
+{% from "macros.html" import nav_link with context %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    {% block head %}
+        <title>My application</title>
+    {% endblock %}
+    </head>
+    <body>
+        <ul class="nav-list">
+            {{ nav_link('home', 'Home') }}
+            {{ nav_link('about', 'About') }}
+            {{ nav_link('contact', 'Get in touch') }}
+        </ul>
+    {% block body %}
+    {% endblock %}
+    </body>
+</html>
+```
+
+Como podemos observar en la primera línea estamos llamando a macros.html que contiene todos nuestros macros, pero queremos uno en específico así que escribimos import nav_link para traer el macro deseado y lo renderizamos de esta manera en nuestro menú {{ nav_link('home', 'Home') }}.
+
+```
+python
+@app.route('/templates-inheritance')
+def templates():
+    user_ip = request.cookies.get('user_ip')
+    context = {
+        'user_ip' : user_ip, 
+        'todos' : TODOS
+    }
+    return render_template('templates-inheritance.html', **context)
+
+
+base.html
+    <title>
+        {% block title %}Curso Flask |  {% endblock %}
+    </title>
+    <body>
+        {% block content %} {% endblock %}
+    </body>
+
+
+macros.html
+{% macro render_todo(todo) %}
+    <li>Descripción: {{todo}}</li>
+{% endmacro %}
+
+
+templates-inheritance.html
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% block title%} 
+{{ super() }} Binvenido {% endblock %}
+
+{% block content %}
+    {% if user_ip %}
+        <h1>Estructura de control, tu ip es {{ user_ip }}</h1>
+        <ul>
+            {% for todo in todos %}
+                {{macros.render_todo(todo)}}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <a href="{{ url_for('index' )}}">Ir a inicio</a>
+    {% endif %}
+
+{% endblock %}
+
+
+```
