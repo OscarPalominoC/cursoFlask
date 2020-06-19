@@ -1,4 +1,4 @@
-## Curso de Flask
+## <h1> Curso de Flask</h1>
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -55,11 +55,11 @@ Para activar el debug mode escribir lo siguiente en la consola:
     echo $FLASK_DEBUG
 
 
-Request y Response
+<h2>Request y Response</h2>
 
-Logging: es una grabación secuencial en un archivo o en una base de datos de todos los eventos que afectan a un proceso particular.
-Se utiliza en muchos casos distintos, para guardar información sobre la actividad de sistemas variados.
+<p>Logging: es una grabación secuencial en un archivo o en una base de datos de todos los eventos que afectan a un proceso particular.
+<p>Se utiliza en muchos casos distintos, para guardar información sobre la actividad de sistemas variados.
 Tal vez su uso más inmediato a nuestras actividades como desarrolladores web sería el logging de accesos al servidor web, que analizado da información del tráfico de nuestro sitio. Cualquier servidor web dispone de logs con los accesos, pero además, suelen disponer de otros logs, por ejemplo, de errores.
-Los sistemas operativos también suelen trabajar con logs, por ejemplo para guardar incidencias, errores, accesos de usuarios, etc.
-A través de el logs se puede encontrar información para detectar posibles problemas en caso de que no funcione algún sistema como debiera o se haya producido una incidencia de seguridad.
+<p>Los sistemas operativos también suelen trabajar con logs, por ejemplo para guardar incidencias, errores, accesos de usuarios, etc.
+<p>A través de el logs se puede encontrar información para detectar posibles problemas en caso de que no funcione algún sistema como debiera o se haya producido una incidencia de seguridad.
 
