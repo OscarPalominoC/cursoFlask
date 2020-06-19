@@ -1,12 +1,12 @@
 ## <h1> Curso de Flask</h1>
 
 <h2>Contenido</h2>
-* <a href="#Introducción">Introducción
-* <a href="#cómo-funcionan-las-aplicaciones-web">¿Cómo funcionan las aplicaciones web?
-* <a href="#qué-es-flask">¿Qué es Flask?
-* <a href="#hello-world-flask">Hello World Flask
-* <a href="#debugging-en-flask">Debugging en Flask
-* <a href="#request-y-response">Request y Response
+- <a href="#Introducción">Introducción
+- <a href="#cómo-funcionan-las-aplicaciones-web">¿Cómo funcionan las aplicaciones web?
+- <a href="#qué-es-flask">¿Qué es Flask?
+- <a href="#hello-world-flask">Hello World Flask
+- <a href="#debugging-en-flask">Debugging en Flask
+- <a href="#request-y-response">Request y Response
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -27,9 +27,9 @@
 <p>A medida que vayas editando el documento, tu navegador trabajará de la mano con los servidores para asegurarse que todos los cambios se estén guardando.
 
 <p>Ventajas:
-* Muchas de las aplicaciones web que existen son gratuitas.
-* Puedes acceder a tu información en cualquier momento y lugar.
-* No dependes de un dispositivo en específico ya que la aplicación se encuentra almacenada en la web.
+- Muchas de las aplicaciones web que existen son gratuitas.
+- Puedes acceder a tu información en cualquier momento y lugar.
+- No dependes de un dispositivo en específico ya que la aplicación se encuentra almacenada en la web.
 
 
 <h2>¿Qué es Flask?</h2>
@@ -42,9 +42,9 @@
 
 <p>Estos son los conceptos principales que debes entender antes de hacer un Hello World en Flask:
     virtualenv: es una herramienta para crear entornos aislados de Python.
-* pip: es el instalador de paquetes para Python.
-* requirements.txt: es el archivo en donde se colocará todas las dependencias a instalar en nuestra aplicación.
-* FLASK_APP: es la variable para identificar el archivo donde se encuentra la aplicación.
+- pip: es el instalador de paquetes para Python.
+- requirements.txt: es el archivo en donde se colocará todas las dependencias a instalar en nuestra aplicación.
+- FLASK_APP: es la variable para identificar el archivo donde se encuentra la aplicación.
 
     virtualenv venv python=python3.7
     pip3 install flask
