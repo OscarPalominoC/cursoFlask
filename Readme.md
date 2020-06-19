@@ -2,12 +2,12 @@
 
 <h2>Contenido</h2>
 
-    - <a href="#Introducción">Introducción</a>
-    - <a href="#cómo-funcionan-las-aplicaciones-web">¿Cómo funcionan las aplicaciones web?</a>
-    - <a href="#qué-es-flask">¿Qué es Flask?</a>
-    - <a href="#hello-world-flask">Hello World Flask</a>
-    - <a href="#debugging-en-flask">Debugging en Flask</a>
-    - <a href="#request-y-response">Request y Response</a>
+- <a href="#Introducción">Introducción</a>
+- <a href="#cómo-funcionan-las-aplicaciones-web">¿Cómo funcionan las aplicaciones web?</a>
+- <a href="#qué-es-flask">¿Qué es Flask?</a>
+- <a href="#hello-world-flask">Hello World Flask</a>
+- <a href="#debugging-en-flask">Debugging en Flask</a>
+- <a href="#request-y-response">Request y Response</a>
 
 <h2>Introducción</h2>
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -29,9 +29,9 @@
 
 <p>Ventajas:
 
-    - Muchas de las aplicaciones web que existen son gratuitas.
-    - Puedes acceder a tu información en cualquier momento y lugar.
-    - No dependes de un dispositivo en específico ya que la aplicación se encuentra almacenada en la web.
+- Muchas de las aplicaciones web que existen son gratuitas.
+- Puedes acceder a tu información en cualquier momento y lugar.
+- No dependes de un dispositivo en específico ya que la aplicación se encuentra almacenada en la web.
 
 
 <h2>¿Qué es Flask?</h2>
