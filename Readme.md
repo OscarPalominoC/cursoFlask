@@ -97,7 +97,7 @@ request.remote_addr -> Retorna la ip del usuario.
 <p>Para hacer esto hay que crear el directorio templates.
 
 ```
-Python
+main.py
     @app.route('/hello')
     def hello():
         user_ip = request.cookies.get('user_ip')
@@ -193,7 +193,7 @@ control-structure.html
 Como podemos observar en la primera línea estamos llamando a macros.html que contiene todos nuestros macros, pero queremos uno en específico así que escribimos import nav_link para traer el macro deseado y lo renderizamos de esta manera en nuestro menú {{ nav_link('home', 'Home') }}.
 
 ```
-python
+main.py
 @app.route('/templates-inheritance')
 def templates():
     user_ip = request.cookies.get('user_ip')
@@ -263,4 +263,60 @@ navbar.html
         <li><a href="https://platzi.com" target="_blank">Platzi.</a></li>
     </ul>
 </nav>
+```
+
+<h2>Uso de archivos estáticos: imágenes</h2>
+<p>Para hacer uso de los archivos estáticos, jinja utiliza un método muy similar al de los templates, hay que guardar las imágenes y demás archivos en carpetas específicas para poder utilizar los url for.
+<p>Lo primero que hay que hacer es crear un nuevo directorio en la carpeta raíz del proyecto llamado "static". Dentro de static se guardarán los archivos estáticos, eso sí, guardados dentro de carpetas diferentes según el tipo de archivos, con el fin de tener un proyecto más ordenado.
+<p>Algo importante, los archivos estáticos se quedan cacheados en el buscador, entonces, si las imágenes no cargan bien, pueden utilizar un hard reload.
+
+```
+main.py
+@app.route('/static')
+def statics():
+    user_ip = request.cookies.get('user_ip')
+    context = {
+        'user_ip' : user_ip, 
+        'todos' : TODOS
+    }
+    return render_template('statics.html', **context)
+
+
+Se creó la carpeta static, y dentro de ellas 2 carpetas, images y css. Dentro de images se guardó un logo de Platzi y en css se creó el siguiente archivo:
+main.css
+html {
+    font-family: sans-serif;
+}
+
+img {
+    max-width: 100px;
+}
+
+
+Se añadió en base.html la siguiente línea
+<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+
+
+En navbar.html se añadió la siguiente línea
+<img src="{{url_for('static', filename='images/logo.png')}}" alt="Platzi Logo">
+
+
+statics.html
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% block title%} 
+{{ super() }} Manejo de archivos estáticos: Imágenes {% endblock %}
+
+{% block content %}
+    {% if user_ip %}
+        <h1>Estructura de control, tu ip es {{ user_ip }}</h1>
+        <ul>
+            {% for todo in todos %}
+                {{macros.render_todo(todo)}}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <a href="{{ url_for('index' )}}">Ir a inicio</a>
+    {% endif %}
+{% endblock %}
 ```

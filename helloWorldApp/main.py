@@ -34,3 +34,13 @@ def templates():
         'todos' : TODOS
     }
     return render_template('templates-inheritance.html', **context)
+
+
+@app.route('/static')
+def statics():
+    user_ip = request.cookies.get('user_ip')
+    context = {
+        'user_ip' : user_ip, 
+        'todos' : TODOS
+    }
+    return render_template('statics.html', **context)
