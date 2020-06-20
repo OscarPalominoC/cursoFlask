@@ -1,6 +1,6 @@
 # Curso de Flask
 
-<h2>Contenido</h2>
+## Contenido
 
 - <a href="#Introducción">Introducción</a>
 - <a href="#cómo-funcionan-las-aplicaciones-web">¿Cómo funcionan las aplicaciones web?</a>
@@ -14,14 +14,14 @@
 - <a href="#herencia-de-templates">Herencia de templates</a>
 - <a href="#include-y-links">Include y Links</a>
 - <a href="#uso-de-archivos-estáticos-imágenes">Uso de archivos estáticos: imágenes</a>
-- <a href="#uso-de-archivos-estáticos-imágenes">Uso de archivos estáticos: imágenes</a>
+- <a href="#configurar-páginas-de-error">Configurar páginas de error</a>
 
-<h2>Introducción</h2>
+## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
 <p>Flask es sencillo de aprender, tiene una documentación clara y práctica, es rápido a la hora de renderizar puede ser hasta tres veces más rapido que Django. También es fácil de realizar una API REST, la estructura de un proyecto es flexible y es ideal para aprender desarrollo web con un framework de Python.</p>
 
 
-<h2>¿Cómo funcionan las aplicaciones web?</h2>
+## ¿Cómo funcionan las aplicaciones web?
 
 <p>Cuando utilizas una aplicación web puedes interactuar con ella desde una computadora hasta un dispositivo móvil, pero esto no quiere decir que consume el procesamiento de tu dispositivo. Todo lo contrario, se hace en una red de servidores.
 
@@ -41,13 +41,13 @@
 - No dependes de un dispositivo en específico ya que la aplicación se encuentra almacenada en la web.
 
 
-<h2>¿Qué es Flask?</h2>
+## ¿Qué es Flask?
 
 <p>En esta clase el profesor Bernardo Cassina nos explica cómo podemos usar Flask para desarrollar aplicaciones web escritas en Python con este framework.
 <p>Flask es un framework minimalista escrito en Python que permite crear aplicaciones web rápidamente y con un mínimo de líneas de código, busca que su infraestructura inicial sea lo más simple posible y pueda personalizarse fácilmente, puedes extender sus funcionalidades con las llamadas Flask Extensions http://flask.pocoo.org/extensions/
 
 
-<h2>Hello World Flask</h2>
+## Hello World Flask
 
 <p>Estos son los conceptos principales que debes entender antes de hacer un Hello World en Flask:
     virtualenv: es una herramienta para crear entornos aislados de Python.
@@ -63,7 +63,7 @@
     Ejecutar flask run
 
 
-<h2>Debugging en Flask</h2>
+## Debugging en Flask
 
 <p>Debugging: es el proceso de identificar y corregir errores de programación.
 Para activar el debug mode escribir lo siguiente en la consola:
@@ -72,7 +72,7 @@ Para activar el debug mode escribir lo siguiente en la consola:
     echo $FLASK_DEBUG
 
 
-<h2>Request y Response</h2>
+## Request y Response
 
 <p>Logging: es una grabación secuencial en un archivo o en una base de datos de todos los eventos que afectan a un proceso particular.
 <p>Se utiliza en muchos casos distintos, para guardar información sobre la actividad de sistemas variados.
@@ -88,13 +88,13 @@ from flask import Flask, request
 request.remote_addr -> Retorna la ip del usuario.
 ```
 
-<h2>Ciclos de Request y Response</h2>
+## Ciclos de Request y Response
 <p>Request-Response: es uno de los métodos básicos que usan las computadoras para comunicarse entre sí, en el que la primera computadora envía una solicitud de algunos datos y la segunda responde a la solicitud.
 <p>Por lo general, hay una serie de intercambios de este tipo hasta que se envía el mensaje completo.
 <p>Por ejemplo: navegar por una página web es un ejemplo de comunicación de request-response.
 <p>Request-response se puede ver como una llamada telefónica, en la que se llama a alguien y responde a la llamada; es decir hacemos una petición y recibimos una respuesta.
 
-<h2>Templates con Jinja</h2>
+## Templates con Jinja
 <p>Un template es un archivo html que nos permite renderear nformación estática y dinámica. Se le pueden pasar variables que posteriormente el browser podrá renderear y el usuario podrá ver la información.
 <p>Para hacer esto hay que crear el directorio templates.
 
@@ -110,7 +110,7 @@ hello.html
 ```
 Jinja puede renderear variables si, y solamente si están encerradas en llaves dobles.
 
-<h2>Estructuras de control</h2>
+## Estructuras de control
 
 <p>Iteración: es la repetición de un segmento de código dentro de un programa de computadora. Puede usarse tanto como un término genérico (como sinónimo de repetición), así como para describir una forma específica de repetición con un estado mutable.
 <p>Un ejemplo de iteración sería el siguiente:
@@ -153,7 +153,7 @@ control-structure.html
 ```
 
 
-<h2>Herencia de templates</h2>
+## Herencia de templates
 
 <p>Macro: son un conjunto de comandos que se invocan con una palabra clave, opcionalmente seguidas de parámetros que se utilizan como código literal. Los Macros son manejados por el compilador y no por el ejecutable compilado.
 <p>Los macros facilitan la actualización y mantenimiento de las aplicaciones debido a que su re-utilización minimiza la cantidad de código escrito necesario para escribir un programa.
@@ -244,7 +244,7 @@ templates-inheritance.html
 
 ```
 
-<h2>Include y Links</h2>
+## Include y Links
 <p>El include es necesario para importar archivos a nuestra área de trabajo; sirven para reutilizar código que se va a repetir muchas veces, y así evitar que el desarrollo sea molestamente tedioso.
 <p>Funcionan de la siguiente manera:
 
@@ -267,7 +267,7 @@ navbar.html
 </nav>
 ```
 
-<h2>Uso de archivos estáticos: imágenes</h2>
+## Uso de archivos estáticos: imágenes
 <p>Para hacer uso de los archivos estáticos, jinja utiliza un método muy similar al de los templates, hay que guardar las imágenes y demás archivos en carpetas específicas para poder utilizar los url for.
 <p>Lo primero que hay que hacer es crear un nuevo directorio en la carpeta raíz del proyecto llamado "static". Dentro de static se guardarán los archivos estáticos, eso sí, guardados dentro de carpetas diferentes según el tipo de archivos, con el fin de tener un proyecto más ordenado.
 <p>Algo importante, los archivos estáticos se quedan cacheados en el buscador, entonces, si las imágenes no cargan bien, pueden utilizar un hard reload.
@@ -323,7 +323,7 @@ statics.html
 {% endblock %}
 ```
 
-## Configurar páginas de error
+##   Configurar páginas de error
 Códigos de error:
 
 - 100: no son errores sino mensajes informativos. Como usuario nunca los verás, sino que entre bambalinas indica que la petición se ha recibido y se continúa el proceso.
