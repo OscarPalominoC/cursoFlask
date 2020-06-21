@@ -1,0 +1,19 @@
+{% extends 'base-bootstrap.html' %}
+{% block title %} 
+    {{ super() }} 404
+{% endblock %}
+{% block content %}
+    {% if user_ip %}
+    <h1>Estructura de control, tu ip es {{ user_ip }}</h1>
+    <ul>
+        {% for todo in todos %}
+        <li>{{todo}}</li>
+        {% endfor %}
+    </ul>
+
+
+
+    {% else %}
+    <a href="{{ url_for('index' )}}">Ir a inicio</a>
+    {% endif %}
+{% endblock %}
