@@ -25,6 +25,7 @@
 - <a href="#uso-de-blueprints">Uso de Blueprints</a>
 - <a href="#base-de-datos-y-app-engine-con-flask">Base de datos y App Engine con Flask</a>
 - <a href="#implementación-de-firestore">Implementación de Firestore</a>
+- <a href="#autenticación-de-usuarios-login">Autenticación de usuarios: Login</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -770,3 +771,56 @@ Si lo dejamos así, las colecciones que nos va a regresar NUNCA van a ser render
 Descripción: {{todo.to_dict().description}}
 ```
 - Primero se convierte a un diccionario, y luego se toma el campo que queremos visualizar, `description` es como se llama este campo en nuestra base de datos.
+
+## Autenticación de usuarios: Login
+
+- Instalamos `flask-login`
+- En el archivo `__init__.py` de la carpeta app importamos:
+```
+from flask_login import LoginManager
+
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
+```
+- Antes de registrar el blueprint inicializamos el login_manager `login_manager.init_app(app)`. Hasta aquí todo debe funcionar para que podamos proteger una ruta con un decorador llamado `@login_required`. Este se debe poner DESPUES de la ruta, no arriba, en el archivo `main.py`.
+- Ahora, importamos el decorador en `main.py` con: `from flask_login import login_required`.
+- Creamos el archivo `models.py` en la carpeta app con la siguiente información:
+```
+from flask_login import UserMixin
+from .firestore_service import get_user
+
+class UserData:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+
+class UserModel(UserMixin):
+    def __init__(self, user_data):
+        """ 
+        :Param user_data: UserData
+        """
+        self.id = user_data.username
+        self.password = user_data.password
+
+    @staticmethod
+    def query(user_id):
+        user_doc = get_user(user_id)
+        user_data = UserData(username=user_doc.id, password=user_doc.to_dict()['password'])
+
+        return UserModel(user_data)
+```
+- Creamos el user loader en el archivo `__init__.py` de la carpeta app de la siguiente manera e importamos los modelos (sin el user loader la aplicación JAMÁS funcionará):
+```
+from .models import UserModel
+
+@login_manager.user_loader
+def load_user(username):
+    return UserModel.query(username)
+```
+- Luego, creamos un metodo en `firestore_service.py` para obtener los id de los usuarios.
+```
+def get_user(user_id):
+    return db.collection('users').document(user_id).get()
+```
+Por el momento la aplicación no inicia sesión, ni siquiera comprueba la contraseña, y cada ve que se intenta iniciar sesión siempre volverá a la pantalla de inicio de sesión.
