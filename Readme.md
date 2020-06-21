@@ -556,4 +556,15 @@ class MainTest(TestCase):
 
 ## App Factory
 
+Esta clase trata sobre modularizar el código, separarlo por carpetas de acuerdo a la convención.
+La carpeta app contiene todas las clases, templates y archivos estáticos de la aplicación, y para llamar a las clases desde `main.py` (al menos en este proyecto) se utiliza:
+```
+from app import create_app
+from app.forms import LoginForm
+
+app = create_app()
+```
+
+`from app import create_app` no llamamos al archivo directamente como en app.forms porque, al llamarse `__init__.py` el interprete lo toma como el archivo principal, el que es llamado por defecto.
+
 ![App Factory](images/app-factory.png)

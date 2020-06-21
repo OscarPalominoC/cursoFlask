@@ -1,22 +1,13 @@
 from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for, flash
-from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
-from wtforms.fields import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+
 import unittest
 
-app = Flask(__name__)
-bootstrap = Bootstrap(app)
+from app import create_app
+from app.forms import LoginForm
 
-app.config['SECRET_KEY'] = 'SUPER SECRETO'
+app = create_app()
 
 TODOS = ['Comprar alimentos', 'Comprar electrodomésticas', 'Comprar cama']
-
-
-class LoginForm(FlaskForm):
-    username = StringField('Nombre de usuario', validators=[DataRequired()])
-    password = PasswordField('Contraseña', validators=[DataRequired()])
-    submit = SubmitField('Enviar')
 
 
 @app.cli.command()
