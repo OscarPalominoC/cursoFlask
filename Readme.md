@@ -23,6 +23,7 @@
 - <a href="#pruebas-básicas-con-flask-testing">Pruebas básicas con Flask-testing</a>
 - <a href="#app-factory">App Factory</a>
 - <a href="#uso-de-blueprints">Uso de Blueprints</a>
+- <a href="#base-de-datos-y-app-engine-con-flask">Base de datos y App Engine con Flask</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -670,3 +671,23 @@ def test_auth_login_post(self):
     response = self.client.post(url_for('auth.login'), data=fake_form)
     self.assertRedirects(response, url_for('index'))
 ```
+
+## Base de datos y App Engine con Flask
+
+- Bases de Datos SQL: su composición esta hecha con bases de datos llenas de tablas con filas que contienen campos estructurados. No es muy flexible pero es el más usado. Una de sus desventajas es que mientras más compleja sea la base de datos más procesamiento necesitará.
+- Base de Datos NOSQL: su composición es no estructurada, es abierta y muy flexible a diferentes tipos de datos, no necesita tantos recursos para ejecutarse, no necesitan una tabla fija como las que se encuentran en bases de datos relacionales y es altamente escalable a un bajo costo de hardware.
+
+<table>
+    <tr>
+        <th>Concepto</th>
+        <th>Cloud DataStore</th>
+        <th>Cloud Firestore</th>
+        <th>Relational Database</th>
+    </tr>
+    <tr>
+        <td>Category of object</td>
+        <td>Kind</td>
+        <td>Collection Group</td>
+        <td>Table</td>
+    </tr>
+</table>
