@@ -20,6 +20,7 @@
 - <a href="#Implementación-de-Flask-Bootstrap-y-Flask-WTF">Implementación de Flask-Bootstrap y Flask-WTF</a>
 - <a href="#Uso-de-método-POST-en-Flask-WTF">Uso de método POST en Flask-WTF</a>
 - <a href="#desplegar-flashes-mensajes-emergentes">Desplegar Flashes (mensajes emergentes)</a>
+- <a href="#pruebas-basicas-con-flask-testing"></a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -484,3 +485,69 @@ Por último, hay que importar todos los scripts de JS que vienen incorporados en
     {{ super() }}
 {% endblock %}
 ```
+
+## Pruebas básicas con Flask-testing
+
+La etapa de pruebas se denomina testing y se trata de una investigación exhaustiva, no solo técnica sino también empírica, que busca reunir información objetiva sobre la calidad de un proyecto de software, por ejemplo, una aplicación móvil o un sitio web.
+
+El objetivo del testing no solo es encontrar fallas sino también aumentar la confianza en la calidad del producto, facilitar información para la toma de decisiones y detectar oportunidades de mejora.
+
+Lo primero es instalar flask-testing con ``pip install flask-testing`` (cabe resaltar que cada una de las dependencias está guardada en el archivo ``requirements.txt``).
+
+
+
+Luego, importamos la librería `unittest` con ``import unittest``, este lo que hará es revisar en las carpetas donde están los tests y se encargará de correrlos. 
+
+Creamos un decorador que nos permitirá trabajar con la línea de comandos, llamado cli (command line interface) de la siguiente manera:
+```
+@app.cli.command()
+def test():
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner().run(tests)
+```
+
+Esto ocurrirá al ejecutarse el comando test, la variable tests va a ser todo lo que encuentre unittest en la carpeta o lo que descubra en una carpeta en la raíz llamada tests. Luego, correrá unittest y probará cada uno de los tests que se descubrieron en la variable anterior.
+
+Luego, en la terminal ejecutamos ``flask test`` con el fin de verificar que si está generando los test, en este momento debe arrojar cero porque no se ha creado ninguno. Los test únicamente correran si su nombre comienza con la palabra test, de lo contrario, nunca van a ejecutarse.
+
+Creamos un nuevo archivo llamado test_base.py dentro de la carpeta tests con el siguiente contenido:
+```
+from flask_testing import TestCase
+from flask import current_app
+
+from main import app
+
+class MainTest(TestCase):
+    def create_app(self):
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+        return app
+
+    def test_app_exists(self):
+        self.assertIsNotNone(current_app)
+
+    def test_app_in_test_mode(self):
+        self.assertTrue(current_app.config['TESTING'])
+    
+    def test_index_redirect(self):
+        response = self.client.get(url_for('index'))
+        self.assertRedirects(response, url_for('hello'))
+
+    def test_hello_get(self):
+        response = self.client.get(url_for('hello'))
+
+        self.assert200(response)
+
+    def test_hello_post(self):
+        fake_form = {
+            'username': 'fake',
+            'password': 'fake-password'
+        }
+        response = self.client.post(url_for('loginForm'), data=fake_form)
+
+        self.assertRedirects(response, url_for('index'))
+```
+
+- app.config['TESTING'] = True => Indica que estamos en el ambiente de testing de flask.
+- app.config['WTF_CSRF_ENABLED'] = False => Cross Site Request Forgery Token, se pone False porque no hay una sesión activa del usuario.
+- assert traduce afirmar, básicamente con los test definimos una lógica que al final nos devolverá True o False, dependiendo de nuestros requerimientos estos harán que los test aprueben o fallen, y si fallan hay que corregir la lógica en la programación de la aplicación.
