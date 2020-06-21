@@ -620,7 +620,7 @@ Luego, en la carpeta templates creamos el login de la página, como fue creado e
     </div>
 {% endblock %}
 ```
-_IMPORTANTE_ Prestar atención al contexto, si declaras `login_form` en la creación de la vista en python también tienes que usarlo en la vista html, de lo contrario, el test no funciona.
+<strong>IMPORTANTE</strong> Prestar atención al contexto, si declaras `login_form` en la creación de la vista en python también tienes que usarlo en la vista html, de lo contrario, el test no funciona.
 
 Creación de los test.
 ```
@@ -634,3 +634,4 @@ def test_auth_login_template(self):
 
     self.assertTemplateUsed('login.html')
 ```
+
