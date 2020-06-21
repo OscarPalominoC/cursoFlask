@@ -28,6 +28,7 @@
 - <a href="#autenticación-de-usuarios-login">Autenticación de usuarios: Login</a>
 - <a href="#autenticación-de-usuarios-logout">Autenticación de usuarios: Logout</a>
 - <a href="#signup-registro-de-usuarios">Signup: Registro de usuarios</a>
+- <a href="#agregar-tareas">Agregar tareas</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -990,3 +991,61 @@ Se crea la vista del signup.html
     </div>
 {% endblock %}
 ```
+
+## Agregar tareas
+
+Primero creamos el método para crear las tareas:
+```
+def put_todos(user_id, description):
+    todos_collection_ref = db.collection('users').document(user_id).collection('todos')
+    todos_collection_ref.add({'description': description})
+```
+- Hay que ser muy cuidadosos en la programación, si se está declarando la colección en el método para agregar como "todos", así también debe ser en el de obtenerlos, de lo contrario, JAMÁS regresará la lista de tareas.
+Se agrega el método para agregar tareas y se crea la logica del formulario en `main.py`.
+```
+from app.firestore_service import get_users, get_todos, put_todos
+
+# Code
+
+@app.route('/hello', methods=['GET', 'POST'])
+@login_required
+def hello():    
+    #user_ip = request.cookies.get('user_ip')
+    user_ip = session.get('user_ip')
+    username = current_user.id
+    todo_form = TodoForm()
+    context = {
+        'user_ip' : user_ip, 
+        'todos' : get_todos(user_id=username),
+        #'login_form': login_form,
+        'username': username,
+        'todo_form': todo_form
+    }
+
+    if todo_form.validate_on_submit():
+        put_todos(user_id=username, description=todo_form.description.data)
+
+        flash('Tu tarea se ha creado con éxito')
+        return redirect(url_for('index'))
+    
+    return render_template('hello.html', **context)
+```
+Por último, creamos el formulario de lista de tareas en `hello.html`.
+```
+{% if username %}
+    <h1>Bienvenido {{username | capitalize}}</h1>
+{% endif %}
+{% if user_ip %}
+    <h3>Tu ip es {{ user_ip }}</h3>
+{% endif %}
+<div class="container">
+    <h2>Crea una nueva tarea</h2>
+    {{ wtf.quick_form(todo_form) }}
+</div>
+<ul>
+{% for todo in todos %}
+    {{ macros.render_todo(todo) }}
+{% endfor %}
+</ul>
+```
+

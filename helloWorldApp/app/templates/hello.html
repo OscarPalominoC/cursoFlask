@@ -1,5 +1,6 @@
 {% extends 'base-bootstrap.html' %}
 {% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
 {% block title %}
     {{super()}}Hello world
 {% endblock %}
@@ -7,15 +8,17 @@
 
 {% if username %}
     <h1>Bienvenido {{username | capitalize}}</h1>
-{%else%}
-    <h1>Inicia sesión, por favor</h1>
 {% endif %}
-
-    <h3>Hello world, tu ip es {{ user_ip }}</h3>
+{% if user_ip %}
+    <h3>Tu ip es {{ user_ip }}</h3>
+{% endif %}
+<div class="container">
+    <h2>Crea una nueva tarea</h2>
+    {{ wtf.quick_form(todo_form) }}
+</div>
 <ul>
 {% for todo in todos %}
     {{ macros.render_todo(todo) }}
 {% endfor %}
 </ul>
-    <p><a href="auth/login">Registrate</a></p>
 {% endblock %}
