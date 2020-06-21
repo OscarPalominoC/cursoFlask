@@ -11,6 +11,10 @@
 {% endif %}
 
     <h1>Hello world, tu ip es {{ user_ip }}</h1>
-
+<ul>
+{% for todo in todos %}
+    <li>{{todo}}</li>
+{% endfor %}
+</ul>
     <p><a href="login-form">Registrate</a></p>
 {% endblock %}

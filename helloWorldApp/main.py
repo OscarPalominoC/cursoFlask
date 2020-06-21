@@ -24,12 +24,18 @@ def index():
     session['user_ip'] = user_ip
     return response
 
-@app.route('/hello', methods=['GET', 'POST'])
+@app.route('/hello', methods=['GET'])
 def hello():
     #user_ip = request.cookies.get('user_ip')
     user_ip = session.get('user_ip')
     username = session.get('username')
-    return render_template('hello.html', user_ip = user_ip, username = username)
+    context = {
+        'user_ip' : user_ip, 
+        'todos' : TODOS,
+        #'login_form': login_form,
+        'username': username
+    }
+    return render_template('hello.html', **context)
 
 
 @app.route('/control-structure')

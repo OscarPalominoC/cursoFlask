@@ -635,3 +635,38 @@ def test_auth_login_template(self):
     self.assertTemplateUsed('login.html')
 ```
 
+Ahora, con estos test demostrando que nuestro auth login funciona, terminamos de crear la vista del login como la del login form.
+```
+from flask import render_template, flash, redirect, url_for, session
+from app.forms import LoginForm
+
+from . import auth
+
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+    context = {
+        'login_form': login_form
+    }
+
+    if login_form.validate_on_submit():
+        username = login_form.username.data
+        session['username'] = username
+
+        flash('Nombre de usuario registrado con éxito.')
+
+        return redirect(url_for('index'))
+
+    return render_template('login.html', **context)
+```
+Así mismo, creamos el test.
+```
+def test_auth_login_post(self):
+    fake_form = {
+        'username': 'fake',
+        'password': 'fakePass'
+    }
+
+    response = self.client.post(url_for('auth.login'), data=fake_form)
+    self.assertRedirects(response, url_for('index'))
+```
