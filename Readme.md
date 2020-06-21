@@ -19,7 +19,7 @@
 - <a href="#Configuración-de-Flask">Configuración de Flask</a>
 - <a href="#Implementación-de-Flask-Bootstrap-y-Flask-WTF">Implementación de Flask-Bootstrap y Flask-WTF</a>
 - <a href="#Uso-de-método-POST-en-Flask-WTF">Uso de método POST en Flask-WTF</a>
-- <a href="#Desplegar-Flashes-mensajes emergentes">Desplegar Flashes (mensajes emergentes)</a>
+- <a href="#desplegar-flashes-mensajes-emergentes">Desplegar Flashes (mensajes emergentes)</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -454,3 +454,33 @@ Obviamente, la página a la que haremos la redirección debe soportar el context
 
 
 ## Desplegar Flashes (mensajes emergentes)
+
+Lo primero que hay que haces, es importarse la librería de mensajes flasheados:
+```
+from flask import Flask, ... , flash
+```
+Luego, llamamos el mensaje flasheado con ``flash('mensaje flasheado')`` en la ubicación necesaria para que tenga sentido usarlo.
+```
+if login_form.validate_on_submit():
+    username = login_form.username.data
+    session['username'] = username
+
+    flash('Usuario registrado con éxito.')
+
+    return redirect(url_for('index'))
+```
+En el template base.html que contenga bootstrap, se crea un ciclo for para importar en la página web los mensajes flasheados, ¿por qué un ciclo for? Porque pueden ser varios y estos son importados en una lista, en una función llamada ``get_flashed_messages()``, el código para mostrar los mensajes flasheados es el siguiente:
+```
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" data-dismiss="alert" class="close">&times;</button>
+        {{ message }}
+    </div>
+{% endfor %}
+```
+Por último, hay que importar todos los scripts de JS que vienen incorporados en bootstrap, se hace usando el siguiente bloque, justo después de terminar el bloque de contenido de la página aplicación:
+```
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
+```
