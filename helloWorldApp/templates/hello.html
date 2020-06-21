@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello world</title>
-</head>
-<body>
+{% extends 'base-bootstrap.html' %}
+{% block title %}
+    {{super()}}Hello world
+{% endblock %}
+{% block content %}
+
+{% if username %}
+    <h1>Bienvenido {{username | capitalize}}</h1>
+{%else%}
+    <h1>Inicia sesión, por favor</h1>
+{% endif %}
+
     <h1>Hello world, tu ip es {{ user_ip }}</h1>
-</body>
-</html>
+
+    <p><a href="login-form">Registrate</a></p>
+{% endblock %}

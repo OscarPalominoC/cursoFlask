@@ -17,6 +17,9 @@
 - <a href="#configurar-páginas-de-error">Configurar páginas de error</a>
 - <a href="#flask-bootstrap">Flask Bootstrap</a>
 - <a href="#Configuración-de-Flask">Configuración de Flask</a>
+- <a href="#Implementación-de-Flask-Bootstrap-y-Flask-WTF">Implementación de Flask-Bootstrap y Flask-WTF</a>
+- <a href="#Uso-de-método-POST-en-Flask-WTF">Uso de método POST en Flask-WTF</a>
+- <a href="#Desplegar-Flashes-mensajes emergentes">Desplegar Flashes (mensajes emergentes)</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -351,7 +354,7 @@ SESSION: es un intercambio de información interactiva semipermanente, también 
 
 Las llaves secretas se crean para que ninguno de los usuarios puedan ingresar y modificar valores de nuestra aplicación, los únicos que pueden obtener y manipular estos datos, somos nosotros.
 
-Para ello, flask ofrece una solución usando ``app.config['SECRET_KEY']``. Ahora, para guardar de forma segura las cookies, usamos la librería ``session`` para reemplazarr ``request``.
+Para ello, flask ofrece una solución usando ``app.config['SECRET_KEY']``. Ahora, para guardar de forma segura las cookies, usamos la librería ``session`` para reemplazar ``request``.
 
     from flask import Flask, ... , session
 
@@ -365,3 +368,89 @@ Para ello, flask ofrece una solución usando ``app.config['SECRET_KEY']``. Ahora
         session['user_ip'] = user_ip
         return response
     
+## Implementación de Flask-Bootstrap y Flask-WTF
+
+Flask utiliza una librería llamada flask-WTF (What the forms) para validar información que ingresan los usuarios a través de formularios.
+
+Lo primero que hay que hacer es instalar las dependencias, ``pip install flask-wtf``, luego importarlas en el archivo ``main.py``.
+
+    from flask_wtf import FlaskForm
+    from wtforms.fields import StringField, PasswordField, SubmitField
+    from wtforms.validators import DataRequired
+
+- ``wtforms.fields`` se encarga de los tipos de datos que admite los formularios y el botón de submit con ``SubmitField``.
+- ``wtfforms.validators`` se encarga de validar la información ANTES de enviarla al servidor, ¿qué significa esto? significa que si no he llenado un campo, validators me dirá que el campo es requerido.
+
+Lo siguiente a hacer es la clase del formulario.
+
+```
+class LoginForm(FlaskForm):
+    username = StringField('Nombre de usuario', validators=[DataRequired()]) # Aquí podemos ver cómo se implementa el validador.
+    password = PasswordField('Contraseña', validators=[DataRequired()])
+    submit = SubmitField('Enviar')
+```
+
+Hay 2 formas de crear el formulario, paso a paso:
+
+```
+<form action="{{url_for('hello')}}"method="POST">
+    {{login_form.username.label}}
+    {{login_form.username}}
+    
+</form>
+```
+
+O de forma automática, con una función de wtforms. Lo primero es importar el esqueleto de cómo se verá y luego usar la función de creado rápido.
+
+```
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{{wtf.quick_form(login_form)}}
+```
+
+## Uso de método POST en Flask-WTF
+
+Flask acepta peticiones GET por defecto y por ende no debemos declararla en nuestras rutas.
+
+Pero cuando necesitamos hacer una petición POST al enviar un formulario debemos declararla de la siguiente manera, como en este ejemplo:
+```
+@app.route('/platzi-post', methods=['GET', 'POST'])
+```
+Debemos declararle además de la petición que queremos, GET, ya que le estamos pasando el parámetro methods para que acepte solo y únicamente las peticiones que estamos declarando.
+
+De esta forma, al actualizar el navegador ya podremos hacer la petición POST a nuestra ruta deseada y obtener la respuesta requerida.
+
+Ahora, para poder utilizar el nombre de usuario que hallamos ingresado en el formulario, usamos ``username = session.get('username')``, y esto tiene que ser ingresado en el contexto.
+```
+context = {
+    'user_ip' : user_ip, 
+    'todos' : TODOS,
+    'login_form': login_form,
+    'username': username
+}
+```
+
+Posteriormente, validamos la información con un condicional, con esto validamos si el usuario ha iniciado o no la sesión en la aplicación.
+
+```
+if login_form.validate_on_submit():
+    username = login_form.username.data
+    session['username'] = username
+```
+
+Si queremos hacer una redirección después de iniciar sesión, usamos la librería url_for de la siguiente manera:
+```
+from flask import Flask, ... , url_for
+
+@<decorador de flask>
+def <función a ejecutar>:
+    # Some code
+    if login_form.validate_on_submit():
+    username = login_form.username.data
+    session['username'] = username
+    return redirect(url_for('<some page - no .html>'))
+```
+Obviamente, la página a la que haremos la redirección debe soportar el contexto, de lo contrario no servirá de nada.
+
+
+## Desplegar Flashes (mensajes emergentes)
