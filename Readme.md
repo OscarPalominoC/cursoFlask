@@ -709,3 +709,13 @@ def test_auth_login_post(self):
         <td>Primary key</td>
     </tr>
 </table>
+
+Para el proyecto de este curso utilizaremos la base de datos Firestore de google cloud.
+- Entramos a console.google.com, y creamos un nuevo proyecto.
+- Entramos a `console.google.com/firestore/data?project=<id del projecto>`
+- Guardamos el primer registro.
+    - Para este proyecto, el id va a ser el mismo usuario, así que no vamos a dejar que se genere automáticamente, y se agrega un campo extra que se va a llamar 'password', que almacenará las contraseñas.
+    - Una vez guardado, como es una base de datos basada en documentos, creamos una nueva colección que se va a llamar todos (pendientes), el id si es generado automáticamente, y en los campos agregamos "description" y creamos un pendiente.
+- Para iniciar sesión en google cloud usamos el comando `gcloud auth login`, carga la página de cuentas de google e iniciamos sesión normal.
+- Para configurar el proyecto por defecto usamos `gcloud auth application-default login` y repetimos el paso anterior.
+
