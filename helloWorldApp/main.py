@@ -1,7 +1,7 @@
 import unittest
 
 from flask import Flask, request, make_response, redirect, render_template, abort, session, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from app import create_app
 from app.forms import LoginForm
@@ -31,7 +31,7 @@ def index():
 def hello():    
     #user_ip = request.cookies.get('user_ip')
     user_ip = session.get('user_ip')
-    username = session.get('username')
+    username = current_user.id
     context = {
         'user_ip' : user_ip, 
         'todos' : get_todos(username),

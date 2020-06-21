@@ -824,3 +824,48 @@ def get_user(user_id):
     return db.collection('users').document(user_id).get()
 ```
 Por el momento la aplicación no inicia sesión, ni siquiera comprueba la contraseña, y cada ve que se intenta iniciar sesión siempre volverá a la pantalla de inicio de sesión.
+- Modificamos el archivo `views.py`
+```
+from flask import render_template, flash, redirect, url_for, session
+from flask_login import login_user
+from app.forms import LoginForm
+
+from . import auth
+from app.firestore_service import get_user
+from app.models import UserModel, UserData
+
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+    context = {
+        'login_form': login_form
+    }
+
+    if login_form.validate_on_submit():
+        username = login_form.username.data
+        password = login_form.password.data
+
+        user_doc = get_user(username) # recuperamos de la base de datos el nombre del usuario.
+
+        if user_doc.to_dict() is not None:
+            password_from_db = user_doc.to_dict()['password'] # Recuperamos de la DB la contraseña
+
+            if password == password_from_db: # Validamos si la contraseña ingresada es igual a la contraseña de la DB
+                user_data = UserData(username, password) # Método de firestore_service
+                user = UserModel(user_data) # Método de firestore_service
+
+                login_user(user) # Método de flask_login
+
+                flash('Bienvenido de nuevo.') # Mensaje flash que indica que inició sesión con éxito.
+
+                redirect(url_for('hello')) # URL a la que es redirigido si la contraseña es correcta.
+            else:
+                flash('Contraseña incorrecta.') # Mensaje flash que indica que la contraseña es errónea.
+        else:
+            flash('El usuario no existe.') # Mensaje flash que indica que el usuario no existe en la DB.
+
+        return redirect(url_for('index')) # Si ocurre cualquier error, enviará al método index, si no ha iniciado sesión volverá a pedir usuario y contraseña.
+
+    return render_template('login.html', **context)
+
+```
