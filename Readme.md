@@ -574,10 +574,10 @@ app = create_app()
 
 Blueprints son módulos con los que se construyen las aplicaciones Flask. Los objetos Blueprints son similares a Flask, pero con la diferencia de que una aplicación sólo tendrá un objeto Flask, mientras que puede tener varios Blueprints. La ventaja de su uso es que para aplicaciones largas puedo distribuir el código en varios ficheros, en lugar de tenerlos todo en un único fichero.
 
-Creamos una carpeta con el nombre del blueprint que queremos crear, en este caso, auth, de autorización, y en ella creamos los archivos `__init.py` y `views.py`. Init se encargará de crear el blueprint de la aplicación, y views se encargará de crear las vistas. Es importante importar las vistas DESPUÉS de hacer el blueprint, de lo contrario, la aplicación se romperá.
+Creamos una carpeta con el nombre del blueprint que queremos crear, en este caso, auth, de autorización, y en ella creamos los archivos `__init__.py` y `views.py`. Init se encargará de crear el blueprint de la aplicación, y views se encargará de crear las vistas. Es importante importar las vistas DESPUÉS de hacer el blueprint, de lo contrario, la aplicación se romperá.
 
 
-__init__.py
+`__init__.py`
 ```
 from flask import Blueprint
 
@@ -620,7 +620,7 @@ Luego, en la carpeta templates creamos el login de la página, como fue creado e
     </div>
 {% endblock %}
 ```
-*IMPORTANTE* Prestar atención al contexto, si declaras `login_form` en la creación de la vista en python también tienes que usarlo en la vista html, de lo contrario, el test no funciona.
+_IMPORTANTE_ Prestar atención al contexto, si declaras `login_form` en la creación de la vista en python también tienes que usarlo en la vista html, de lo contrario, el test no funciona.
 
 Creación de los test.
 ```
