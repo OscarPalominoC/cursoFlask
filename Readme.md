@@ -20,7 +20,7 @@
 - <a href="#Implementación-de-Flask-Bootstrap-y-Flask-WTF">Implementación de Flask-Bootstrap y Flask-WTF</a>
 - <a href="#Uso-de-método-POST-en-Flask-WTF">Uso de método POST en Flask-WTF</a>
 - <a href="#desplegar-flashes-mensajes-emergentes">Desplegar Flashes (mensajes emergentes)</a>
-- <a href="#pruebas-basicas-con-flask-testing"></a>
+- <a href="#pruebas-basicas-con-flask-testing">Pruebas básicas con Flask-testing</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
