@@ -556,4 +556,4 @@ class MainTest(TestCase):
 
 ## App Factory
 
-![App Factory](images/'app-factory.png)
+![App Factory](images/app-factory.png)
