@@ -15,6 +15,8 @@
 - <a href="#include-y-links">Include y Links</a>
 - <a href="#uso-de-archivos-estáticos-imágenes">Uso de archivos estáticos: imágenes</a>
 - <a href="#configurar-páginas-de-error">Configurar páginas de error</a>
+- <a href="#flask-bootstrap">Flask Bootstrap</a>
+- <a href="#Configuración-de-Flask">Configuración de Flask</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -332,3 +334,34 @@ Códigos de error:
 - 400: corresponden a errores del cliente y con frecuencia sí los verás. Es el caso del conocido error 404, que aparece cuando la página que has intentado buscar no existe. Es, por tanto, un error del cliente (la dirección web estaba mal).
 - 500: mientras que los códigos de estado 400 implican errores por parte del cliente (es decir, de parte tuya, tu navegador o tu conexión), los errores 500 son errores desde la parte del servidor. Es posible que el servidor tenga algún problema temporal y no hay mucho que puedas hacer salvo probar de nuevo más tarde.
 
+## Flask Bootstrap
+
+<p>Framework: es un conjunto estandarizado de conceptos, prácticas y criterios para enfocar un tipo de problemática particular que sirve como referencia, para enfrentar y resolver nuevos problemas de índole similar.
+
+## Configuración de Flask
+
+Para activar el development mode debes escribir lo siguiente en la consola:
+
+```
+export FLASK_ENV=development
+echo $FLASK_ENV
+```
+
+SESSION: es un intercambio de información interactiva semipermanente, también conocido como diálogo, una conversación o un encuentro, entre dos o más dispositivos de comunicación, o entre un ordenador y usuario.
+
+Las llaves secretas se crean para que ninguno de los usuarios puedan ingresar y modificar valores de nuestra aplicación, los únicos que pueden obtener y manipular estos datos, somos nosotros.
+
+Para ello, flask ofrece una solución usando ``app.config['SECRET_KEY']``. Ahora, para guardar de forma segura las cookies, usamos la librería ``session`` para reemplazarr ``request``.
+
+    from flask import Flask, ... , session
+
+    app.config['SECRET_KEY'] = 'SUPER SECRETO'
+
+    app.route('/')
+    def index():
+        user_ip = request.remote_addr
+        response = make_response(redirect('/hello'))
+        # response.set_cookie('user_ip', user_ip)
+        session['user_ip'] = user_ip
+        return response
+    
