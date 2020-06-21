@@ -27,6 +27,7 @@
 - <a href="#implementación-de-firestore">Implementación de Firestore</a>
 - <a href="#autenticación-de-usuarios-login">Autenticación de usuarios: Login</a>
 - <a href="#autenticación-de-usuarios-logout">Autenticación de usuarios: Logout</a>
+- <a href="#signup-registro-de-usuarios">Signup: Registro de usuarios</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -896,4 +897,96 @@ Y para concluir, en el navbar agregamos una línea que verificará si hay un usu
         <li><a href="https://platzi.com" target="_blank">Platzi</a></li>
     </ul>
 </div>
+```
+
+## Signup: Registro de usuarios
+
+Creamos una función en `firestore_service.py`, esta función guardará los datos en la base de datos:
+```
+def user_put(user_data):
+    user_ref = db.collection('users').document(user_data.username)
+    user_ref.set({'password': user_data.password})
+```
+Ahora, para poder crear una contraseña segura usamos la librería security de Werkzeug en `views,py` y modificamos el inicio de sesión y escribimos el signup.
+```
+from werkzeug.security import generate_password_hash, check_password_hash
+# Code
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+    context = {
+        'login_form': login_form
+    }
+
+    if login_form.validate_on_submit():
+        username = login_form.username.data
+        password = login_form.password.data
+
+        user_doc = get_user(username)
+
+        if user_doc.to_dict() is not None:
+            if check_password_hash(user_doc.to_dict()['password'], password):
+            # Así como se importó generate_password_hash, se tiene que importar check_password_hash, recibe 2 parametros, 1 la contraseña hasheada y 2, la contraseña sin hashear, lo que hace el programa es desencriptarla y comprobar que sean iguales.
+                user_data = UserData(username, password)
+                user = UserModel(user_data)
+
+                login_user(user)
+
+                flash('Bienvenido de nuevo.')
+
+                redirect(url_for('hello'))
+            else:
+                flash('Contraseña incorrecta.')
+        else:
+            flash('El usuario no existe.')
+
+
+        return redirect(url_for('index'))
+
+    return render_template('login.html', **context)
+
+# Code
+
+@auth.route('/signup', methods=['GET', 'POST'])
+def signup():
+    signup_form = LoginForm()
+    context = {
+        'signup_form': signup_form
+    }
+
+    if signup_form.validate_on_submit():
+        username = signup_form.username.data
+        password = signup_form.password.data
+
+        user_doc = get_user(username)
+
+        if user_doc.to_dict() is None:
+            password_hash = generate_password_hash(password)
+            # Se hashea la contraseña, para que sea segura, ¿por qué? porque los únicos que deben conocer la contraseña son los usuarios.
+            user_data = UserData(username, password_hash)
+            user_put(user_data)
+
+            user = UserModel(user_data)
+            login_user(user)
+
+            flash('Bienvenido!')
+            return redirect(url_for('hello'))
+        else:
+            flash('El usuario ya existe')
+
+    return render_template('signup.html', **context)
+```
+Se crea la vista del signup.html
+```
+{% extends 'base-bootstrap.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block title %}
+    {{super()}} Registrate
+{% endblock %}
+{% block content %}
+    <h1>Registro</h1>
+    <div class="container">
+        {{wtf.quick_form(signup_form)}}
+    </div>
+{% endblock %}
 ```
