@@ -21,6 +21,7 @@
 - <a href="#Uso-de-método-POST-en-Flask-WTF">Uso de método POST en Flask-WTF</a>
 - <a href="#desplegar-flashes-mensajes-emergentes">Desplegar Flashes (mensajes emergentes)</a>
 - <a href="#pruebas-básicas-con-flask-testing">Pruebas básicas con Flask-testing</a>
+- <a href="#app-factory">App Factory</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -551,3 +552,8 @@ class MainTest(TestCase):
 - app.config['TESTING'] = True => Indica que estamos en el ambiente de testing de flask.
 - app.config['WTF_CSRF_ENABLED'] = False => Cross Site Request Forgery Token, se pone False porque no hay una sesión activa del usuario.
 - assert traduce afirmar, básicamente con los test definimos una lógica que al final nos devolverá True o False, dependiendo de nuestros requerimientos estos harán que los test aprueben o fallen, y si fallan hay que corregir la lógica en la programación de la aplicación.
+
+
+## App Factory
+
+![]('images/'app-factory.png')
