@@ -22,6 +22,7 @@
 - <a href="#desplegar-flashes-mensajes-emergentes">Desplegar Flashes (mensajes emergentes)</a>
 - <a href="#pruebas-básicas-con-flask-testing">Pruebas básicas con Flask-testing</a>
 - <a href="#app-factory">App Factory</a>
+- <a href="#uso-de-blueprints">Uso de Blueprints</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -568,3 +569,68 @@ app = create_app()
 `from app import create_app` no llamamos al archivo directamente como en app.forms porque, al llamarse `__init__.py` el interprete lo toma como el archivo principal, el que es llamado por defecto.
 
 ![App Factory](images/app-factory.png)
+
+## Uso de Blueprints
+
+Blueprints son módulos con los que se construyen las aplicaciones Flask. Los objetos Blueprints son similares a Flask, pero con la diferencia de que una aplicación sólo tendrá un objeto Flask, mientras que puede tener varios Blueprints. La ventaja de su uso es que para aplicaciones largas puedo distribuir el código en varios ficheros, en lugar de tenerlos todo en un único fichero.
+
+Creamos una carpeta con el nombre del blueprint que queremos crear, en este caso, auth, de autorización, y en ella creamos los archivos `__init.py` y `views.py`. Init se encargará de crear el blueprint de la aplicación, y views se encargará de crear las vistas. Es importante importar las vistas DESPUÉS de hacer el blueprint, de lo contrario, la aplicación se romperá.
+
+
+__init__.py
+```
+from flask import Blueprint
+
+auth = Blueprint('auth', __name__, url_prefix='/auth')
+
+from . import views
+```
+
+
+views.py
+```
+from flask import render_template
+from app.forms import LoginForm
+
+from . import auth
+
+@auth.route('/login')
+def login():
+    context = {
+        'login_form': LoginForm()
+    }
+    return render_template('login.html', **context)
+```
+
+Luego, en la carpeta templates creamos el login de la página, como fue creado en la vista.
+```
+{% extends 'base-bootstrap.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block title %}
+    {{super()}} Iniciar sesión
+{% endblock %}
+{% block content %}
+    {% if username %}
+        <h1>Bienvenido {{username | capitalize}}</h1>
+    {%else%}
+        <h1>Inicia sesión, por favor</h1>
+    {% endif %}
+    <div class="container">
+        {{wtf.quick_form(login_form)}}
+    </div>
+{% endblock %}
+```
+*IMPORTANTE* Prestar atención al contexto, si declaras `login_form` en la creación de la vista en python también tienes que usarlo en la vista html, de lo contrario, el test no funciona.
+
+Creación de los test.
+```
+def test_auth_login_get(self):
+    response = self.client.get(url_for('auth.login'))
+
+    self.assert200(response)
+
+def test_auth_login_template(self):
+    self.client.get(url_for('auth.login'))
+
+    self.assertTemplateUsed('login.html')
+```
