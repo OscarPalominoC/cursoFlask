@@ -26,6 +26,7 @@
 - <a href="#base-de-datos-y-app-engine-con-flask">Base de datos y App Engine con Flask</a>
 - <a href="#implementación-de-firestore">Implementación de Firestore</a>
 - <a href="#autenticación-de-usuarios-login">Autenticación de usuarios: Login</a>
+- <a href="#autenticación-de-usuarios-logout">Autenticación de usuarios: Logout</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -867,5 +868,32 @@ def login():
         return redirect(url_for('index')) # Si ocurre cualquier error, enviará al método index, si no ha iniciado sesión volverá a pedir usuario y contraseña.
 
     return render_template('login.html', **context)
+```
 
+## Autenticación de usuarios: Logout
+
+En el archivo `views.py`, creamos una nueva función llamada logout. En ella importaremos las funciones para cerrar sesión y requerir haber iniciado sesión para poder cerrarla.
+```
+from flask_login import login_user, logout_user, login_required
+
+# Code
+
+@auth.route('logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Regresa pronto')
+    return redirect(url_for('auth.login'))
+```
+Y para concluir, en el navbar agregamos una línea que verificará si hay un usuario auténticado, y si lo hay, agregará una opción para cerrar la sesión.
+```
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        {% if current_user.is_authenticated %}
+        <li><a href="{{url_for('auth.logout')}}">Cerrar sesión</a></li>
+        {% endif %}
+        <li><a href="{{ url_for('index') }}">Inicio</a></li>
+        <li><a href="https://platzi.com" target="_blank">Platzi</a></li>
+    </ul>
+</div>
 ```

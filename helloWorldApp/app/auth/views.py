@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, session
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 from app.forms import LoginForm
 
 from . import auth
@@ -40,3 +40,11 @@ def login():
         return redirect(url_for('index'))
 
     return render_template('login.html', **context)
+
+
+@auth.route('logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Regresa pronto')
+    return redirect(url_for('auth.login'))
