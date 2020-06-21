@@ -690,4 +690,22 @@ def test_auth_login_post(self):
         <td>Collection Group</td>
         <td>Table</td>
     </tr>
+    <tr>
+        <td>One object</td>
+        <td>Entity</td>
+        <td>Document</td>
+        <td>Row</td>
+    </tr>
+    <tr>
+        <td>Individual Data for an object</td>
+        <td>Property</td>
+        <td>Field</td>
+        <td>Column</td>
+    </tr>
+    <tr>
+        <td>Unique ID for an object</td>
+        <td>Key</td>
+        <td>Document ID</td>
+        <td>Primary key</td>
+    </tr>
 </table>
