@@ -24,6 +24,7 @@
 - <a href="#app-factory">App Factory</a>
 - <a href="#uso-de-blueprints">Uso de Blueprints</a>
 - <a href="#base-de-datos-y-app-engine-con-flask">Base de datos y App Engine con Flask</a>
+- <a href="#implementación-de-firestore">Implementación de Firestore</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -719,3 +720,53 @@ Para el proyecto de este curso utilizaremos la base de datos Firestore de google
 - Para iniciar sesión en google cloud usamos el comando `gcloud auth login`, carga la página de cuentas de google e iniciamos sesión normal.
 - Para configurar el proyecto por defecto usamos `gcloud auth application-default login` y repetimos el paso anterior.
 
+## Implementación de Firestore
+
+- Lo primero que hay que hacer es crear el archivo `firebase_service.py` dentro de la carpeta `app`.
+- Instalamos la dependencia `firebase-admin` desde requirements.txt o la consola.
+- Llenamos el archivo `firestore_service.py` con la siguiente información:
+```
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
+credential = credentials.ApplicationDefault()
+firebase_admin.initialize_app(credential)
+
+db = firestore.client()
+
+
+def get_users():
+    return db.collection('users').get()
+```
+- Modificamos nuestra ruta de hello así:
+```
+@app.route('/hello', methods=['GET'])
+def hello():
+    #user_ip = request.cookies.get('user_ip')
+    user_ip = session.get('user_ip')
+    username = session.get('username')
+    context = {
+        'user_ip' : user_ip, 
+        'todos' : TODOS,
+        #'login_form': login_form,
+        'username': username
+    }
+    users = get_users()
+    for user in users:
+        print(user)
+    return render_template('hello.html', **context)
+```
+- Con el print podremos ver en la consola la información que está llegando.
+- Si da el caso que tenemos múltiples proyectos y necesitamos que nos envíe uno específico, primero averiguamos que el proyecto sea el que necesitamos con `gcloud config list`, si no es el proyecto, buscamos el id en console.google.com, luego tipeamos: `gcloud config set project <id del proyecto>` para definirlo.
+
+Como firebase es una base de datos basada en documentos, para devolver los documentos almacenados en otros documentos utilizamos:
+```
+def get_todos(user_id):
+    return db.collection('users').document(user_id).collection('todo').get()
+```
+Si lo dejamos así, las colecciones que nos va a regresar NUNCA van a ser renderizadas apropiadamente, para ello en nuestro archivo html utilizamos:
+```
+Descripción: {{todo.to_dict().description}}
+```
+- Primero se convierte a un diccionario, y luego se toma el campo que queremos visualizar, `description` es como se llama este campo en nuestra base de datos.

@@ -1,4 +1,5 @@
 {% extends 'base-bootstrap.html' %}
+{% import 'macros.html' as macros %}
 {% block title %}
     {{super()}}Hello world
 {% endblock %}
@@ -10,10 +11,10 @@
     <h1>Inicia sesión, por favor</h1>
 {% endif %}
 
-    <h1>Hello world, tu ip es {{ user_ip }}</h1>
+    <h3>Hello world, tu ip es {{ user_ip }}</h3>
 <ul>
 {% for todo in todos %}
-    <li>{{todo}}</li>
+    {{ macros.render_todo(todo) }}
 {% endfor %}
 </ul>
     <p><a href="login-form">Registrate</a></p>
