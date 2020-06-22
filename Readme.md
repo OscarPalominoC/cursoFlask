@@ -30,6 +30,8 @@
 - <a href="#signup-registro-de-usuarios">Signup: Registro de usuarios</a>
 - <a href="#agregar-tareas">Agregar tareas</a>
 - <a href="#eliminar-tareas">Eliminar taras</a>
+- <a href="#editar-tareas">Editar tareas</a>
+
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -1065,12 +1067,38 @@ from app.firestore_service import get_users, get_todos, put_todos, delete_todo
 
 # Code
 
+@app.route('/hello', methods=['GET', 'POST'])
+@login_required
+def hello():    
+    #user_ip = request.cookies.get('user_ip')
+    user_ip = session.get('user_ip')
+    username = current_user.id
+    todo_form = TodoForm()
+    delete_form = DeleteTodoForm()
+    context = {
+        'user_ip' : user_ip, 
+        'todos' : get_todos(user_id=username),
+        #'login_form': login_form,
+        'username': username,
+        'todo_form': todo_form,
+        'delete_form': delete_form
+    }
+
+# Code
+
 @app.route('/todos/delete/<todo_id>', methods=['POST'])
 def delete(todo_id):
     user_id = current_user.id
     delete_todo(user_id = user_id, todo_id = todo_id)
     return redirect(url_for('/hello.html'))
 ```
+
+Creamos un formulario para eliminar el pendiente en `forms.py`.
+```
+class DeleteTodoForm(FlaskForm):
+    submit = SubmitField('Borrar')
+```
+
 Modificamos la vista de los macros
 ```
 {% macro render_todo(todo) %}
@@ -1103,6 +1131,103 @@ Modificamos la vista en `hello.html`
     {% for todo in todos %}
     {{ macros.render_todo(todo, delete_form) }}
 {% endfor %}
+</ul>
+{% endblock %}
+```
+
+## Editar tareas
+
+Primero creamos el formulario en `forms.py`
+```
+class UpdateTodoForm(FlaskForm):
+    submit = SubmitField('Actualizar')
+```
+Luego creamos nuestro método update en `firestore_service.py`.
+```
+def update_todo(user_id, todo_id, done):
+    todo_done = not bool(done)
+    todo_ref = _get_todo_ref(user_id, todo_id)
+    todo_ref.update({'done': todo_done})
+
+
+def _get_todo_ref(user_id, todo_id):
+    return db.document('users/{}/todos/{}'.format(user_id, todo_id))
+```
+Actualizamos la lista de imports, agregamos el contexto update en la ruta `hello`, y creamos el método para actualizar en `main.py`.
+```
+from app.firestore_service import update_todo, get_todos, put_todos, delete_todo
+
+# Code
+
+@app.route('/hello', methods=['GET', 'POST'])
+@login_required
+def hello():    
+    #user_ip = request.cookies.get('user_ip')
+    user_ip = session.get('user_ip')
+    username = current_user.id
+    todo_form = TodoForm()
+    delete_form = DeleteTodoForm()
+    update_form = UpdateTodoForm()
+    context = {
+        'user_ip' : user_ip, 
+        'todos' : get_todos(user_id=username),
+        #'login_form': login_form,
+        'username': username,
+        'todo_form': todo_form,
+        'delete_form': delete_form,
+        'update_form': update_form
+    }
+
+# Code
+
+@app.route('/todos/update/<todo_id>/<int:done>', methods=['POST'])
+def update(todo_id, done):
+    user_id = current_user.id
+    update_todo(user_id=user_id, todo_id=todo_id, done=done)
+    return redirect(url_for('hello'))
+```
+
+Actualizamos los macros.
+```
+{% import 'bootstrap/wtf.html' as wtf %}
+{% macro render_todo(todo, delete_form, update_form) %}
+    <ul class="list_group">
+        <li class="list-group-item">
+            <span class="badge">
+                {{ todo.to_dict().done }}
+            </span>
+            Descripción: {{ todo.to_dict().description }}
+            {{wtf.quick_form(delete_form, action=url_for('delete', todo_id=todo.id))}}
+            {{wtf.quick_form(update_form, action=url_for('update', todo_id=todo.id, done=todo.to_dict().done))}}
+        </li>
+    </ul>
+{% endmacro %}
+```
+
+Actualizamos la vista de hello.html
+```
+{% extends 'base-bootstrap.html' %}
+{% import 'macros.html' as macros %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block title %}
+    {{super()}}Hello world
+{% endblock %}
+{% block content %}
+
+{% if username %}
+    <h1>Bienvenido {{username | capitalize}}</h1>
+{% endif %}
+{% if user_ip %}
+    <h3>Tu ip es {{ user_ip }}</h3>
+{% endif %}
+<div class="container">
+    <h2>Crea una nueva tarea</h2>
+    {{ wtf.quick_form(todo_form) }}
+</div>
+<ul class="list-group">
+    {% for todo in todos %}
+        {{ macros.render_todo(todo, delete_form, update_form) }}
+    {% endfor %}
 </ul>
 {% endblock %}
 ```
