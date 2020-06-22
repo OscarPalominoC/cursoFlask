@@ -1,0 +1,152 @@
+﻿¿Cómo debemos cuidar o manejar nuestro SECRET_KEY de producción? MAL
+D
+
+¿Cómo debemos guardar un password del usuario?
+
+¿Cuál es el comando que agregamos después de instalar GCloud SDK?
+
+¿Qué debes conocer para comenzar con Flask?
+
+
+¿Qué tipo de base de datos es Firestore?
+
+Sintaxis correcta para declarar una ruta dinámica "users" que recibe "user_id" como parámetro
+
+
+Para desplegar una forma y encriptar la sesiones, debemos de declarar esta variable en app.config:
+
+¿Cuál es el decorador para crear una función para manejar errores?
+
+
+Nombre de la variable que Flask expone para acceder a la información de la petición del usuario MAL
+C ?
+
+¿Cómo se llama el directorio donde Flask busca archivos estáticos por defecto?
+
+Después de crear un nuevo Blueprint, ¿cómo lo integramos en la aplicación?
+
+¿Qué variable hay que crear en la terminal para activar el debugger y reloader?
+
+
+¿Con qué comando creamos una nueva instancia de Flask?
+
+Una aplicación web utiliza el internet y un __ para comunicarse con el servidor.
+
+
+¿Qué es un flash?
+
+¿Cómo se llama el archivo de configuración de AppEngine?
+
+¿Para qué utilizamos @login_manager.user_loader?
+
+¿Cuál es la sintaxis correcta para iniciar un bloque condicional?
+
+Nombre del método que tenemos que implementar en una nueva instancia de flask_testing.TestCase
+
+
+Variable que usamos para detectar si el usuario está firmado. Disponible en cualquier template. MAL
+E
+
+¿Qué variable hay que declarar en la terminal para prender el servidor de Flask?
+
+Flask-Login requiere la implementación de una clase UserModel con propiedades específicas.
+
+¿Cuál es la variable que expone flask_wtf.FlaskForm para validar formas cuando son enviadas y qué tipo de variable es?
+
+¿Con qué comando prendemos el servidor local? 
+
+¿Para qué sirve Flask?
+
+¿Para qué nos sirve un Blueprint?
+
+
+¿Cuál es el template inicial que tenemos que extender en Bootstrap?
+
+
+¿A qué nos referimos con microframework?
+
+
+¿Cuál es la sintaxis correcta para representar una variable?
+
+¿Cuál es la función correcta para crear un link interno a una ruta específica?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
