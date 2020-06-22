@@ -29,6 +29,7 @@
 - <a href="#autenticación-de-usuarios-logout">Autenticación de usuarios: Logout</a>
 - <a href="#signup-registro-de-usuarios">Signup: Registro de usuarios</a>
 - <a href="#agregar-tareas">Agregar tareas</a>
+- <a href="#eliminar-tareas">Eliminar taras</a>
 
 ## Introducción
 <p>Conoce todo el potencial de Flask como framework web de Python, integraciones con Bootstrap, GCloud, What The Forms y más.</p>
@@ -1049,3 +1050,59 @@ Por último, creamos el formulario de lista de tareas en `hello.html`.
 </ul>
 ```
 
+## Eliminar tareas
+
+Primero creamos el método para borrar el pendiente en `firestore_service.py`.
+```
+def delete_todo(user_id, todo_id):
+    todo_ref = db.document('users/{}/todos/{}'.format(user_id, todo_id))
+    #todo_ref = db.collection('users').document(user_id).collection('todos').collection(todo_id)
+    todo_ref.delete()
+```
+Importamos en `main.py` el método para borrar el elemento y creamos la lógica .
+```
+from app.firestore_service import get_users, get_todos, put_todos, delete_todo
+
+# Code
+
+@app.route('/todos/delete/<todo_id>', methods=['POST'])
+def delete(todo_id):
+    user_id = current_user.id
+    delete_todo(user_id = user_id, todo_id = todo_id)
+    return redirect(url_for('/hello.html'))
+```
+Modificamos la vista de los macros
+```
+{% macro render_todo(todo) %}
+    <ul class="list_group">
+        <li class="list-group-item">
+            <span class="badge">{{ todo.to_dict().done }}</span>
+            Descripción: {{todo.to_dict().description}}
+            {{wtf.quick_form(delete_form, action=url_for('delete', todo_id=todo.id))}} 
+            # Este formulario nos mostrará si queremos borrar o no el pendiente.
+        </li>
+    </ul>
+{% endmacro %}
+```
+
+Modificamos la vista en `hello.html`
+```
+{% block content %}
+
+{% if username %}
+    <h1>Bienvenido {{username | capitalize}}</h1>
+{% endif %}
+{% if user_ip %}
+    <h3>Tu ip es {{ user_ip }}</h3>
+{% endif %}
+<div class="container">
+    <h2>Crea una nueva tarea</h2>
+    {{ wtf.quick_form(todo_form) }}
+</div>
+<ul class="list-group">
+    {% for todo in todos %}
+    {{ macros.render_todo(todo, delete_form) }}
+{% endfor %}
+</ul>
+{% endblock %}
+```
